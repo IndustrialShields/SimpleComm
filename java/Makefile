@@ -4,6 +4,7 @@ CLASSES:=$(patsubst %.java,%.class,$(SOURCES))
 TESTS:=$(wildcard test/*.java)
 TESTS_CLASSES:=$(patsubst %.java,%.class,$(TESTS))
 JAR:=$(NAME).jar
+DOC_CONFIG:=doxygen.config
 
 .PHONY: first all world
 first all world: $(JAR)
@@ -13,6 +14,10 @@ $(CLASSES): $(SOURCES)
 
 $(JAR): $(CLASSES)
 	jar cvf $(@) $^
+
+.PHONY: doc
+doc: $(SOURCES)
+	doxygen $(DOC_CONFIG)
 
 .PHONY: tests
 tests: $(TESTS_CLASSES)
