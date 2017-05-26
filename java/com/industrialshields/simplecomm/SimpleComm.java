@@ -104,6 +104,10 @@ public class SimpleComm {
 				buffer.rewind();
 				byte tlen = buffer.get();
 
+				if (tlen == 0) {
+					continue;
+				}
+
 				buffer.clear();
 				buffer.limit(tlen);
 				if (channel.read(buffer) < tlen) {
