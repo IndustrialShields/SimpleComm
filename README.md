@@ -4,10 +4,10 @@ SimpleComm library is used to communcate with *Industrial Shields* PLCs devices 
 
 ## API reference
 1. [JAVA](java/README.md)
+2. [Node](nodejs/README.md)
 
 ## TODO
 More languages:
 1. C++
 2. Python
-3. Javascript
-4. ...
+3. ...

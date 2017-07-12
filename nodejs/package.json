@@ -1,0 +1,11 @@
+{
+  "name": "simplecomm",
+  "version": "1.0.0",
+  "description": "Industrial Shields SimpleComm library for NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "example": "node example.js"
+  },
+  "author": "Boot&Work Corp. S.L.",
+  "license": "ISC"
+}
