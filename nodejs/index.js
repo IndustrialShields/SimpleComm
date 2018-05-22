@@ -12,12 +12,12 @@ var exports = module.exports = {};
 
 exports.address = 0;
 
-exports.send = (stream, data, dest, type, callback) => {
-	if (typeof dest == 'function') {
-		return exports.send(stream, data, 0, 0, dest);
+exports.toBuffer = (data, dest, type) => {
+	if (typeof type == "undefined") {
+		type = 0;
 	}
-	if (typeof type == 'function') {
-		return exports.send(stream, data, dest, 0, type);
+	if (typeof dest == "undefined") {
+		dest = 0;
 	}
 
 	// Allocate Buffer: SYN + LEN + DST + SRC + TYP + DAT + CRC
@@ -26,13 +26,12 @@ exports.send = (stream, data, dest, type, callback) => {
 	const pkt = Buffer.concat([hdr, dat], hdr.length + dat.length);
 	const crc = calcCRC(pkt);
 	const tlen = pkt.length + 1;
-	const buff = Buffer.concat([
+
+	return  Buffer.concat([
 			Buffer.from([SYN, tlen]),
 			pkt,
 			Buffer.from([crc]),
 	], tlen + 2);
-
-	stream.write(buff, callback);
 };
 
 exports.fromBuffer = (buff) => {
@@ -74,4 +73,16 @@ exports.fromBuffer = (buff) => {
 	}
 
 	return packets;
+};
+
+exports.send = (stream, data, dest, type, callback) => {
+	if (typeof dest == 'function') {
+		return exports.send(stream, data, 0, 0, dest);
+	}
+	if (typeof type == 'function') {
+		return exports.send(stream, data, dest, 0, type);
+	}
+
+	const buff = exports.toBuffer(data, dest, type);
+	stream.write(buff, callback);
 };
